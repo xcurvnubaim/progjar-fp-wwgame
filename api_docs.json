@@ -1,0 +1,623 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Werewolf Game Server API",
+    "description": "A complete multiplayer Werewolf (Mafia) game server with real-time gameplay, automatic phase transitions, and persistent state management.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Werewolf Game Server"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8888",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {"name": "Game Management", "description": "Create, join, and start games"},
+    {"name": "Game Actions", "description": "In-game actions like voting and special abilities"},
+    {"name": "Information", "description": "Get game state and player information"},
+    {"name": "Chat", "description": "In-game communication during day phase"},
+    {"name": "Admin", "description": "Administrative and debug endpoints"}
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["Information"],
+        "summary": "Server information",
+        "description": "Get basic server information and available endpoints",
+        "responses": {
+          "200": {
+            "description": "Server information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {"type": "string", "example": "Werewolf Game Server"},
+                    "version": {"type": "string", "example": "1.0"},
+                    "documentation": {
+                      "type": "object",
+                      "properties": {
+                        "swagger_ui": {"type": "string", "example": "/swagger-ui"},
+                        "openapi_json": {"type": "string", "example": "/api-docs"},
+                        "openapi_yaml": {"type": "string", "example": "/api-docs.yaml"}
+                      }
+                    },
+                    "endpoints": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games": {
+      "post": {
+        "tags": ["Game Management"],
+        "summary": "Create a new game",
+        "description": "Creates a new Werewolf game instance. Returns a unique game ID that players will use to join the game.",
+        "responses": {
+          "200": {
+            "description": "Game created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "game_id": {
+                      "type": "string",
+                      "description": "Unique identifier for the created game",
+                      "example": "abc12345"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {"$ref": "#/components/responses/ServerError"}
+        }
+      }
+    },
+    "/games/{game_id}/join": {
+      "post": {
+        "tags": ["Game Management"],
+        "summary": "Join a game",
+        "description": "Add a player to an existing game. The game must be in setup phase (not yet started). Player names must be unique within the game.",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the game to join",
+            "schema": {"type": "string", "example": "abc12345"}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20,
+                    "description": "Player's display name (must be unique in game)",
+                    "example": "Alice"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully joined the game",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "player_id": {
+                      "type": "string",
+                      "description": "Unique identifier for the player",
+                      "example": "def67890"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "409": {"$ref": "#/components/responses/Conflict"}
+        }
+      }
+    },
+    "/games/{game_id}/start": {
+      "post": {
+        "tags": ["Game Management"],
+        "summary": "Start a game",
+        "description": "Begin the game by assigning roles to players and starting the first night phase. Requires at least 3 players.",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string", "example": "abc12345"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Game started successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string", "example": "started"}
+                  }
+                }
+              }
+            }
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "409": {"$ref": "#/components/responses/Conflict"}
+        }
+      }
+    },
+    "/games/{game_id}/action": {
+      "post": {
+        "tags": ["Game Actions"],
+        "summary": "Perform a special action",
+        "description": "Execute role-specific actions during the night phase: Werewolf Vote or Seer Investigate",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string", "example": "abc12345"}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["player_id", "action_type"],
+                "properties": {
+                  "player_id": {
+                    "type": "string",
+                    "description": "ID of the player performing the action",
+                    "example": "def67890"
+                  },
+                  "action_type": {
+                    "type": "string",
+                    "enum": ["werewolf_vote", "seer_investigate"],
+                    "description": "Type of action to perform",
+                    "example": "werewolf_vote"
+                  },
+                  "target_id": {
+                    "type": "string",
+                    "description": "ID of the target player",
+                    "example": "ghi12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Action recorded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string", "example": "recorded"}
+                  }
+                }
+              }
+            }
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "403": {"$ref": "#/components/responses/Forbidden"}
+        }
+      }
+    },
+    "/games/{game_id}/vote": {
+      "post": {
+        "tags": ["Game Actions"],
+        "summary": "Vote to eliminate a player",
+        "description": "Vote to eliminate a player during the day phase. Each player can vote once and can change their vote.",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string", "example": "abc12345"}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["player_id", "target_id"],
+                "properties": {
+                  "player_id": {
+                    "type": "string",
+                    "description": "ID of the voting player",
+                    "example": "def67890"
+                  },
+                  "target_id": {
+                    "type": "string",
+                    "description": "ID of the player to vote for elimination",
+                    "example": "ghi12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vote recorded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string", "example": "voted"}
+                  }
+                }
+              }
+            }
+          },
+          "403": {"$ref": "#/components/responses/Forbidden"}
+        }
+      }
+    },
+    "/games/{game_id}/chat": {
+      "post": {
+        "tags": ["Chat"],
+        "summary": "Send a chat message",
+        "description": "Send a message to all players during the day phase. Rate-limited to 3 messages per player per minute.",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string", "example": "abc12345"}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["player_id", "message"],
+                "properties": {
+                  "player_id": {
+                    "type": "string",
+                    "description": "ID of the player sending the message",
+                    "example": "def67890"
+                  },
+                  "message": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Message content",
+                    "example": "I think Alice is acting suspicious!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Message sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string", "example": "sent"}
+                  }
+                }
+              }
+            }
+          },
+          "403": {"$ref": "#/components/responses/Forbidden"},
+          "429": {"$ref": "#/components/responses/RateLimit"}
+        }
+      }
+    },
+    "/games/{game_id}/state": {
+      "get": {
+        "tags": ["Information"],
+        "summary": "Get game state",
+        "description": "Retrieve the current state of the game, including phase, players, and recent chat messages.",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string", "example": "abc12345"}
+          },
+          {
+            "name": "player_id",
+            "in": "query",
+            "required": false,
+            "description": "ID of the requesting player (for filtered view)",
+            "schema": {"type": "string", "example": "def67890"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Game state retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/GameState"}
+              }
+            }
+          },
+          "404": {"$ref": "#/components/responses/NotFound"}
+        }
+      }
+    },
+    "/games/{game_id}/player/{player_id}": {
+      "get": {
+        "tags": ["Information"],
+        "summary": "Get player role information",
+        "description": "Get role-specific information for a player, including their role and special abilities.",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string", "example": "abc12345"}
+          },
+          {
+            "name": "player_id",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string", "example": "def67890"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Player information retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/PlayerRoleInfo"}
+              }
+            }
+          },
+          "404": {"$ref": "#/components/responses/NotFound"}
+        }
+      }
+    },
+    "/admin/games": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all games (Debug)",
+        "description": "Administrative endpoint to view all games and active timers.",
+        "responses": {
+          "200": {
+            "description": "All games and timers retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "games": {"type": "object"},
+                    "active_timers": {"type": "object"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message describing what went wrong",
+            "example": "Game not found"
+          }
+        }
+      },
+      "GameState": {
+        "type": "object",
+        "properties": {
+          "game_id": {"type": "string", "example": "abc12345"},
+          "phase": {
+            "type": "string",
+            "enum": ["setup", "night", "day", "ended"],
+            "example": "day"
+          },
+          "started": {"type": "boolean", "example": true},
+          "ended": {"type": "boolean", "example": false},
+          "winner": {
+            "type": "string",
+            "nullable": true,
+            "enum": ["villagers", "werewolves", null],
+            "example": null
+          },
+          "players": {
+            "type": "array",
+            "items": {"$ref": "#/components/schemas/PlayerInfo"}
+          },
+          "alive_count": {"type": "integer", "example": 3},
+          "dead_count": {"type": "integer", "example": 1},
+          "phase_end": {
+            "type": "number",
+            "nullable": true,
+            "description": "Unix timestamp when current phase ends",
+            "example": 1640995200.0
+          },
+          "time_remaining": {
+            "type": "number",
+            "nullable": true,
+            "description": "Seconds remaining in current phase",
+            "example": 45.2
+          },
+          "recent_chat": {
+            "type": "array",
+            "items": {"$ref": "#/components/schemas/ChatMessage"},
+            "description": "Recent chat messages (day phase only)"
+          }
+        }
+      },
+      "PlayerInfo": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "example": "def67890"},
+          "name": {"type": "string", "example": "Alice"},
+          "alive": {"type": "boolean", "example": true},
+          "role": {
+            "type": "string",
+            "enum": ["werewolf", "seer", "villager"],
+            "example": "villager",
+            "description": "Only visible if game ended or requesting own info"
+          }
+        }
+      },
+      "ChatMessage": {
+        "type": "object",
+        "properties": {
+          "player": {
+            "type": "string",
+            "description": "ID of the player who sent the message",
+            "example": "def67890"
+          },
+          "message": {
+            "type": "string",
+            "example": "I think Bob is the werewolf!"
+          },
+          "time": {
+            "type": "number",
+            "description": "Unix timestamp when message was sent",
+            "example": 1640995200.0
+          }
+        }
+      },
+      "PlayerRoleInfo": {
+        "type": "object",
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "role": {"type": "string", "example": "werewolf"},
+              "allies": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {"type": "string", "example": "ghi12345"},
+                    "name": {"type": "string", "example": "Bob"}
+                  }
+                }
+              },
+              "can_kill": {
+                "type": "boolean",
+                "example": true,
+                "description": "Whether the werewolf can vote to kill (night phase)"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "role": {"type": "string", "example": "seer"},
+              "can_investigate": {
+                "type": "boolean",
+                "example": true,
+                "description": "Whether the seer can investigate (night phase)"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "role": {"type": "string", "example": "villager"},
+              "objective": {
+                "type": "string",
+                "example": "Find and eliminate all werewolves"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "responses": {
+      "NotFound": {
+        "description": "The requested resource was not found",
+        "content": {
+          "application/json": {
+            "schema": {"$ref": "#/components/schemas/Error"}
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Invalid request format or parameters",
+        "content": {
+          "application/json": {
+            "schema": {"$ref": "#/components/schemas/Error"}
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Action not allowed in current game state",
+        "content": {
+          "application/json": {
+            "schema": {"$ref": "#/components/schemas/Error"}
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Resource conflict (e.g., game already started)",
+        "content": {
+          "application/json": {
+            "schema": {"$ref": "#/components/schemas/Error"}
+          }
+        }
+      },
+      "RateLimit": {
+        "description": "Rate limit exceeded",
+        "content": {
+          "application/json": {
+            "schema": {"$ref": "#/components/schemas/Error"}
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {"$ref": "#/components/schemas/Error"}
+          }
+        }
+      }
+    }
+  }
+}

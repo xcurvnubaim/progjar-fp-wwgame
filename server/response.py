@@ -11,7 +11,13 @@ def build_response(status_code=404, status_message='Not Found', body=b'', header
     headers['Content-Length'] = str(len(body))
     headers['Connection'] = 'close'
     headers['Date'] = datetime.now(UTC).strftime('%a, %d %b %Y %H:%M:%S GMT')
-    headers['Server'] = 'CustomPythonServer/1.0'
+    headers['Server'] = 'WWPythonServer/1.0'
+
+    # Add CORS headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    headers["Access-Control-Allow-Private-Network"] = "true"
 
     response_line = f"HTTP/1.1 {status_code} {status_message}\r\n"
     headers_block = ''.join(f"{k}: {v}\r\n" for k, v in headers.items())
