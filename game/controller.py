@@ -1,11 +1,12 @@
 import json
 import time
 import urllib.parse
-from server.core import App
-from server.response import build_response
+import logging
+from server.http import HttpServer
 from game.game_state import GameStateManager
 from game.game_logic import GameLogic
 from game.phase_timer import phase_timer
+
 
 class WerewolfApp:
     """
@@ -13,7 +14,7 @@ class WerewolfApp:
     """
     
     def __init__(self):
-        self.app = App()
+        self.app = HttpServer()
         self.state_manager = GameStateManager()
         self.game_logic = GameLogic()
         self.setup_routes()
@@ -59,6 +60,7 @@ class WerewolfApp:
         @self.app.route('POST', '/games/<game_id>/join')
         def join_game(req):
             """Join a game."""
+            logging.warning(req)
             try:
                 game_id = req.get('path_params', {}).get('game_id')
                 if not game_id:
@@ -289,7 +291,7 @@ class WerewolfApp:
                 with open('api_docs.json', 'r') as f:
                     content = f.read()
                 headers = {'Content-Type': 'application/json'}
-                return build_response(200, 'OK', content, headers)
+                return self.app.response(200, 'OK', content, headers)
             except FileNotFoundError:
                 return self.json_response(404, {'error': 'API documentation not found'})
             except Exception as e:
@@ -302,7 +304,7 @@ class WerewolfApp:
                 with open('api_docs.yaml', 'r') as f:
                     content = f.read()
                 headers = {'Content-Type': 'text/yaml'}
-                return build_response(200, 'OK', content, headers)
+                return self.app.response(200, 'OK', content, headers)
             except FileNotFoundError:
                 return self.json_response(404, {'error': 'API documentation not found'})
             except Exception as e:
@@ -348,7 +350,7 @@ class WerewolfApp:
 </html>
             """
             headers = {'Content-Type': 'text/html'}
-            return build_response(200, 'OK', html_content, headers)
+            return self.app.response(200, 'OK', html_content, headers)
     
     def parse_json_body(self, req) -> dict:
         """Parse JSON body from request."""
@@ -371,7 +373,7 @@ class WerewolfApp:
         """Create a JSON response."""
         headers = {'Content-Type': 'application/json'}
         body = json.dumps(data, indent=2)
-        return build_response(status_code, self.get_status_message(status_code), body, headers)
+        return self.app.response(status_code, self.get_status_message(status_code), body, headers)
     
     def get_status_message(self, code: int) -> str:
         """Get HTTP status message for code."""

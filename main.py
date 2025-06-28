@@ -1,4 +1,4 @@
-from server.socket_server import HttpSocketServer
+from server.server_process_http import Server
 from game.controller import create_app
 
 # Create the Werewolf game application
@@ -18,4 +18,4 @@ if __name__ == '__main__':
     print("  GET /admin/games - List all games (debug)")
     print()
     
-    HttpSocketServer(app).start()
+    Server(app, 8888).start()

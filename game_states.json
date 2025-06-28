@@ -840,5 +840,21 @@
     "started": true,
     "ended": true,
     "winner": "werewolves"
+  },
+  "4fa7480d": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751120642.4661787,
+    "started": false,
+    "ended": false,
+    "winner": null
   }
 }
