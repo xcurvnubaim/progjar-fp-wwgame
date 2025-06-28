@@ -163,6 +163,8 @@ class GameLogic:
         
         for player in game['players'].values():
             player['vote'] = None
+
+        game_updates['players'] = game['players']
         
         self.state_manager.update_game_state(game_id, game_updates)
         
