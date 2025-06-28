@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { MessageCircle, Send } from "lucide-react"
 
-const API_BASE = "http://localhost:8888"
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
 interface ChatPanelProps {
   gameState: any

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 
-const API_BASE = "http://localhost:8888"
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
 export function useGameState(gameId: string | null, playerId: string | null) {
   const [gameState, setGameState] = useState<any>(null)

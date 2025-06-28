@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Moon, Users, Zap } from "lucide-react"
 
-const API_BASE = "http://localhost:8888"
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
 export default function HomePage() {
   const [gameId, setGameId] = useState("")

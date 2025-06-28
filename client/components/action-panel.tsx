@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Vote, Eye, Zap, CheckCircle } from "lucide-react"
 
-const API_BASE = "http://localhost:8888"
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
 interface ActionPanelProps {
   gameState: any
