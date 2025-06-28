@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Vote, Eye, Zap, CheckCircle } from "lucide-react"
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE
 
 interface ActionPanelProps {
   gameState: any
@@ -29,6 +29,7 @@ export function ActionPanel({ gameState, playerInfo, gameId, playerId }: ActionP
 
   const isNight = gameState?.phase === "night"
   const isDay = gameState?.phase === "day"
+  const isPlayerAlive = playerInfo?.is_alive !== false
   const alivePlayers = gameState?.players?.filter((p: any) => p.alive && p.id !== playerId) || []
 
   // Reset action completed when phase changes
@@ -56,6 +57,11 @@ export function ActionPanel({ gameState, playerInfo, gameId, playerId }: ActionP
       setInvestigationResults(results)
     }
   }, [playerInfo, gameState?.players])
+
+  // Don't show action panel if player is dead
+  if (!isPlayerAlive) {
+    return null
+  }
 
   const performAction = async (actionType: string) => {
     if (!selectedTarget || isPerformingAction) return
@@ -92,11 +98,6 @@ export function ActionPanel({ gameState, playerInfo, gameId, playerId }: ActionP
       console.error("Failed to perform action:", error)
     }
     setIsPerformingAction(false)
-  }
-
-  const getPlayerName = (playerId: string) => {
-    const player = gameState?.players?.find((p: any) => p.id === playerId)
-    return player?.name || "Unknown"
   }
 
   const formatTimestamp = (timestamp: number) => {
@@ -197,11 +198,13 @@ export function ActionPanel({ gameState, playerInfo, gameId, playerId }: ActionP
                     </div>
                     <Badge
                       variant="outline"
-                      className={
-                        data.role === "werewolf" ? "border-red-500 text-red-400" : "border-green-500 text-green-400"
-                      }
+                      className={`ml-2 text-xs ${
+                        investigationResults[targetId].role === "werewolf"
+                          ? "border-red-500 text-red-400"
+                          : "border-green-500 text-green-400"
+                      }`}
                     >
-                      {data.role === "werewolf" ? "Werewolf" : "Innocent"}
+                      {investigationResults[targetId].role === "werewolf" ? "WW" : "OK"}
                     </Badge>
                   </div>
                 ))}

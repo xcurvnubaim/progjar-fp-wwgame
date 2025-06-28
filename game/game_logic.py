@@ -215,8 +215,6 @@ class GameLogic:
         role = player['role']
 
         is_alive = player['alive']
-        if not is_alive:
-            return {'error': 'Dead players cannot perform actions'}
         
         if role == 'werewolf':
             # Werewolf can see other werewolves
