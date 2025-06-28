@@ -3,6 +3,7 @@ import threading
 import time
 import uuid
 import os
+import logging
 from typing import Dict, Optional, Any
 
 class GameStateManager:
@@ -98,9 +99,13 @@ class GameStateManager:
             for key, value in updates.items():
                 if key in self.games[game_id]:
                     if isinstance(value, dict) and isinstance(self.games[game_id][key], dict):
+                        logging.warning("Updating existing key: %s in game %s with value %s", key, game_id, value)
                         self.games[game_id][key].update(value)
                     else:
+                        logging.warning("Setting key: %s in game %s to value %s", key, game_id, value)
                         self.games[game_id][key] = value
+
+        logging.warning(f'{self.games[game_id]}, {game_id}, {updates}')
         
         self.save_to_file()
         return True

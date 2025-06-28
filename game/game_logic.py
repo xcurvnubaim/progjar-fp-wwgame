@@ -39,6 +39,8 @@ class GameLogic:
         # Apply role assignments
         for player_id, role in zip(player_ids, roles):
             game['players'][player_id]['role'] = role
+
+        game_updates['players'] = game['players']
         
         return self.state_manager.update_game_state(game_id, game_updates)
     

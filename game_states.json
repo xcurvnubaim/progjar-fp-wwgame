@@ -932,5 +932,309 @@
     "started": true,
     "ended": false,
     "winner": null
+  },
+  "f8014644": {
+    "phase": "night",
+    "phase_end": 1751123480.1184847,
+    "players": {
+      "de4267ca": {
+        "name": "aa",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123448.1416237
+      },
+      "26c82cec": {
+        "name": "bb",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123454.4136138
+      },
+      "280630bd": {
+        "name": "cc",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123457.6955254
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751123443.7295988,
+    "started": true,
+    "ended": false,
+    "winner": null
+  },
+  "21aefa6d": {
+    "phase": "night",
+    "phase_end": 1751123692.600193,
+    "players": {
+      "286bc067": {
+        "name": "aa",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123661.4478376
+      },
+      "bbcdbb29": {
+        "name": "bb",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123666.7397213
+      },
+      "85412abb": {
+        "name": "cc",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123670.5674582
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751123658.2221737,
+    "started": true,
+    "ended": false,
+    "winner": null
+  },
+  "30ef1cdf": {
+    "phase": "night",
+    "phase_end": 1751123842.223941,
+    "players": {
+      "89a181e0": {
+        "name": "aa",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123810.9906313
+      },
+      "a379eadc": {
+        "name": "bb",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123815.9883537
+      },
+      "c5ffa0cd": {
+        "name": "cc",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123819.6825676
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751123809.1617377,
+    "started": true,
+    "ended": false,
+    "winner": null
+  },
+  "baea15b9": {
+    "phase": "night",
+    "phase_end": 1751124090.7654321,
+    "players": {
+      "5b50c3c6": {
+        "name": "aa",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124058.3474038
+      },
+      "5394ed83": {
+        "name": "bb",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124063.6793504
+      },
+      "3450cdb8": {
+        "name": "cc",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124067.2991877
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751124056.3001564,
+    "started": true,
+    "ended": false,
+    "winner": null
+  },
+  "aacc7788": {
+    "phase": "night",
+    "phase_end": 1751124253.7331963,
+    "players": {
+      "d4de7c22": {
+        "name": "aa",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124223.5449975
+      },
+      "daee876a": {
+        "name": "bb",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124228.0696712
+      },
+      "fef0305e": {
+        "name": "cc",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124231.6442273
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751124221.8224566,
+    "started": true,
+    "ended": false,
+    "winner": null
+  },
+  "d29bfe9d": {
+    "phase": "night",
+    "phase_end": 1751124392.2286735,
+    "players": {
+      "eb153b60": {
+        "name": "aa",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124360.6080446
+      },
+      "6bde2a05": {
+        "name": "bb",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124365.0343833
+      },
+      "1f007935": {
+        "name": "cc",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124368.5812752
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751124358.5208042,
+    "started": true,
+    "ended": false,
+    "winner": null
+  },
+  "56ded7bc": {
+    "phase": "night",
+    "phase_end": 1751124509.5722542,
+    "players": {
+      "d3443e33": {
+        "name": "aa",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124481.6607835
+      },
+      "4813509c": {
+        "name": "bb",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124485.1072235
+      },
+      "328e5a1f": {
+        "name": "cc",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124487.1515028
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751124479.5856059,
+    "started": true,
+    "ended": false,
+    "winner": null
+  },
+  "6638bfac": {
+    "phase": "night",
+    "phase_end": 1751124725.9844272,
+    "players": {
+      "a3d80e36": {
+        "name": "aa",
+        "role": "werewolf",
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124698.826376
+      },
+      "7f15c737": {
+        "name": "bb",
+        "role": "seer",
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124701.6586382
+      },
+      "0d14fb7c": {
+        "name": "cc",
+        "role": "villager",
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751124703.7993848
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": "a3d80e36",
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751124697.1754107,
+    "started": true,
+    "ended": false,
+    "winner": null
   }
 }
