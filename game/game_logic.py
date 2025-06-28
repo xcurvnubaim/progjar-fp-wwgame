@@ -100,6 +100,8 @@ class GameLogic:
                 'target_role': target_role,
                 'timestamp': time.time()
             })
+
+        game_updates['players'] = game['players']
         
         # Clear player votes
         for player in game['players'].values():
