@@ -213,6 +213,10 @@ class GameLogic:
         
         player = game['players'][player_id]
         role = player['role']
+
+        is_alive = player['alive']
+        if not is_alive:
+            return {'error': 'Dead players cannot perform actions'}
         
         if role == 'werewolf':
             # Werewolf can see other werewolves
@@ -224,7 +228,8 @@ class GameLogic:
             return {
                 'role': 'werewolf',
                 'allies': other_werewolves,
-                'can_kill': game['phase'] == 'night'
+                'can_kill': game['phase'] == 'night',
+                'is_alive': is_alive
             }
         
         elif role == 'seer':
@@ -234,13 +239,15 @@ class GameLogic:
             return {
                 'role': 'seer',
                 'can_investigate': game['phase'] == 'night',
-                'previous_investigations': seer_history
+                'previous_investigations': seer_history,
+                'is_alive': is_alive
             }
         
         else:  # villager
             return {
                 'role': 'villager',
-                'objective': 'Find and eliminate all werewolves'
+                'objective': 'Find and eliminate all werewolves',
+                'is_alive': is_alive
             }
     
     def validate_action(self, game_id: str, player_id: str, action_type: str, target_id: str = None) -> Tuple[bool, str]:
