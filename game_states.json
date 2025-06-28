@@ -856,5 +856,81 @@
     "started": false,
     "ended": false,
     "winner": null
+  },
+  "0db62f02": {
+    "phase": "night",
+    "phase_end": 1751123028.962495,
+    "players": {
+      "71f3ef9d": {
+        "name": "abc",
+        "role": "seer",
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751122798.973029
+      },
+      "4d177eb0": {
+        "name": "bb",
+        "role": "villager",
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751122998.8035853
+      },
+      "f5d94577": {
+        "name": "cc",
+        "role": "werewolf",
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123006.4268394
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": "4d177eb0",
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751122796.0423145,
+    "started": true,
+    "ended": false,
+    "winner": null
+  },
+  "26ba3099": {
+    "phase": "night",
+    "phase_end": 1751123204.5320485,
+    "players": {
+      "83d9a261": {
+        "name": "aa",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123166.544366
+      },
+      "8a8c54dc": {
+        "name": "bb",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123173.3957202
+      },
+      "df13d4a8": {
+        "name": "cc",
+        "role": null,
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751123182.0077634
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751123164.7568457,
+    "started": true,
+    "ended": false,
+    "winner": null
   }
 }

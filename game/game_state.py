@@ -30,6 +30,7 @@ class GameStateManager:
     
     def create_game(self) -> str:
         """Create a new game and return its ID."""
+        self.load_from_file()
         game_id = str(uuid.uuid4())[:8]  # Short ID for easier use
         
         with self.games_lock:
@@ -55,6 +56,7 @@ class GameStateManager:
     
     def add_player(self, game_id: str, name: str) -> Optional[str]:
         """Add a player to the game and return their player ID."""
+        self.load_from_file()  # Ensure we have the latest game state
         if game_id not in self.games:
             return None
         
@@ -82,11 +84,13 @@ class GameStateManager:
     
     def get_game_state(self, game_id: str) -> Optional[Dict]:
         """Get the current state of a game."""
+        self.load_from_file()  # Ensure we have the latest game state
         with self.games_lock:
             return self.games.get(game_id, None)
     
     def update_game_state(self, game_id: str, updates: Dict) -> bool:
         """Update game state with given updates."""
+        self.load_from_file()
         if game_id not in self.games:
             return False
         
@@ -103,6 +107,7 @@ class GameStateManager:
     
     def record_action(self, game_id: str, action_type: str, player_id: str, target_id: str = None, data: Any = None) -> bool:
         """Record a player action."""
+        self.load_from_file()
         if game_id not in self.games:
             return False
         
@@ -139,6 +144,7 @@ class GameStateManager:
     
     def add_chat_message(self, game_id: str, player_id: str, message: str) -> bool:
         """Add a chat message to the game."""
+        self.load_from_file()
         if game_id not in self.games:
             return False
         
@@ -209,6 +215,7 @@ class GameStateManager:
     
     def get_all_games(self) -> Dict[str, Dict]:
         """Get all games (for debugging/admin purposes)."""
+        self.load_from_file()
         with self.games_lock:
             return dict(self.games)
     
