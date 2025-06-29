@@ -160,5 +160,107 @@
     "started": true,
     "ended": true,
     "winner": "villagers"
+  },
+  "188947b9": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751169346.495157,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "33292d9a": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751169364.4610047,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "aebb405c": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751169365.6819031,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "19e89fe9": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751169369.5651093,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "62803ff5": {
+    "phase": "ended",
+    "phase_end": null,
+    "players": {
+      "eaec59c1": {
+        "name": "jjcho",
+        "role": "werewolf",
+        "alive": false,
+        "vote": null,
+        "joined_at": 1751169436.0173287
+      },
+      "46be961d": {
+        "name": "hitler",
+        "role": "seer",
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751169586.8344522
+      },
+      "57a8759a": {
+        "name": "jarip",
+        "role": "villager",
+        "alive": true,
+        "vote": null,
+        "joined_at": 1751169613.4827037
+      }
+    },
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751169370.8769844,
+    "started": true,
+    "ended": true,
+    "winner": "villagers"
   }
 }
