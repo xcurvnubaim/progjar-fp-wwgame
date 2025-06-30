@@ -262,5 +262,181 @@
     "started": true,
     "ended": true,
     "winner": "villagers"
+  },
+  "17989647": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258037.9388988,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "b3d90fb3": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258173.9941223,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "2b294b23": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258178.2905889,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "a08670d9": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258180.5960083,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "0880c419": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258181.331236,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "7446953a": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258183.3152628,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "2d182898": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258184.3409863,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "6b33305b": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258250.41214,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "cbb08cab": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258259.0358126,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "9627516e": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258261.7191803,
+    "started": false,
+    "ended": false,
+    "winner": null
+  },
+  "68567479": {
+    "phase": "setup",
+    "phase_end": null,
+    "players": {},
+    "actions": {
+      "werewolf_votes": {},
+      "seer_target": null,
+      "day_votes": {}
+    },
+    "seer_history": [],
+    "chat": [],
+    "created_at": 1751258262.7307847,
+    "started": false,
+    "ended": false,
+    "winner": null
   }
 }

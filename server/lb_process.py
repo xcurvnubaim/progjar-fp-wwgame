@@ -16,7 +16,6 @@ class BackendList:
 		self.current=0
 	def getserver(self):
 		s = self.servers[self.current]
-		print(s)
 		self.current=self.current+1
 		if (self.current>=len(self.servers)):
 			self.current=0
@@ -61,13 +60,26 @@ def Server():
 	with ProcessPoolExecutor(20) as executor:
 		while True:
 			connection, client_address = my_socket.accept()
-			backend_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			backend_sock.settimeout(1)
-			backend_address = backend.getserver()
-			logging.warning(f"{client_address} connecting to {backend_address}")
-			try:
-				backend_sock.connect(backend_address)
+			
+			backend_sock = None
+			for _ in range(len(backend.servers)):
+				backend_address = backend.getserver()
+				try:
+					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+					sock.settimeout(1)
+					sock.connect(backend_address)
+					backend_sock = sock
+					logging.warning(f"{client_address} connecting to {backend_address}")
+					break
+				except (ConnectionRefusedError, TimeoutError):
+					logging.warning(f"Backend {backend_address} not available, trying next...")
+			
+			if backend_sock is None:
+				logging.error("All backend servers are down")
+				connection.close()
+				continue
 
+			try:
 				#logging.warning("connection from {}".format(client_address))
 				toupstream = executor.submit(ProcessTheClient, connection, client_address,backend_sock,'toupstream')
 				#the_clients.append(toupstream)
