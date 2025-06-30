@@ -20,6 +20,11 @@ export default function HomePage() {
       const response = await fetch(`${API_BASE}/games`, {
         method: "POST",
       })
+      if (!response.ok) {
+        alert(response.statusText)
+        setIsCreating(false)
+        return
+      }
       const data = await response.json()
       if (response.ok) {
         setGameId(data.game_id)

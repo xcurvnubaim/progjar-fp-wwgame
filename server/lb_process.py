@@ -76,6 +76,7 @@ def Server():
 			
 			if backend_sock is None:
 				logging.error("All backend servers are down")
+				connection.sendall(b"HTTP/1.1 502 Bad Gateway\r\nContent-Type: text/plain\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods: GET, POST, OPTIONS\r\nAccess-Control-Allow-Headers: *\r\nContent-Length: 15\r\n\r\n502 Bad Gateway")
 				connection.close()
 				continue
 
