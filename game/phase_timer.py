@@ -180,6 +180,61 @@ class PhaseTimer:
                     }
             return active_info
     
+    def restore_timers_from_state(self):
+        """
+        Restore active timers from game state on server restart.
+        This should be called during application initialization.
+        """
+        current_time = time.time()
+        restored_count = 0
+        
+        # Get all games from state manager
+        all_games = self.state_manager.get_all_games()
+        
+        for game_id, game in all_games.items():
+            # Skip ended games or games without active phases
+            if game.get('ended') or not game.get('started'):
+                continue
+                
+            phase = game.get('phase')
+            phase_end = game.get('phase_end')
+            
+            # Skip if no active phase or phase_end timestamp
+            if not phase or not phase_end or phase in ['setup', 'ended']:
+                continue
+            
+            # Calculate remaining time
+            remaining_time = phase_end - current_time
+            
+            # If timer has already expired, process the phase end immediately
+            if remaining_time <= 0:
+                print(f"Timer for game {game_id} phase {phase} has expired, processing immediately")
+                self.end_phase(game_id, phase)
+                continue
+            
+            # If timer is still valid, restore it
+            if phase in PHASE_DURATIONS:
+                print(f"Restoring timer for game {game_id}, phase {phase}, {remaining_time:.1f}s remaining")
+                
+                # Cancel any existing timer for this game (shouldn't be any, but safety first)
+                self.cancel_timer(game_id)
+                
+                # Create and start timer with remaining time
+                with self.timer_lock:
+                    timer = threading.Timer(remaining_time, self._timer_callback, args=[game_id, phase])
+                    timer.daemon = True
+                    timer.start()
+                    self.active_timers[game_id] = timer
+                
+                restored_count += 1
+        
+        if restored_count > 0:
+            print(f"Successfully restored {restored_count} active timers from game state")
+        else:
+            print("No active timers to restore")
+        
+        return restored_count
+
     def cleanup_finished_games(self):
         """Remove timers for ended games."""
         games_to_cleanup = []

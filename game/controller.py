@@ -396,4 +396,9 @@ class WerewolfApp:
 def create_app():
     """Factory function to create the application."""
     werewolf_app = WerewolfApp()
+    
+    # Restore active timers from game state on server startup
+    print("Restoring active timers from game state...")
+    phase_timer.restore_timers_from_state()
+    
     return werewolf_app.get_app()
